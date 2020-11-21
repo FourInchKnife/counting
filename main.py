@@ -12,12 +12,30 @@ me = discord.Client()
 
 counter = 0
 
+def print_bool(to_test):
+    val = eval(to_test)
+    print(to_test,val)
+    return val
+
+async def has_role(role: discord.Role,member: discord.Member):
+    return role in member.roles
+
 @me.event
 async def on_message(message):
+    global glob_mess
     global counter
-    if message.author == me.user or not message.channel.id in [779782709005910078]:
+    global is_not_player
+
+    glob_mess = message
+
+    is_not_player = not await has_role(779788698379747348,message.author)
+
+    if print_bool("glob_mess.author == me.user") or print_bool("not glob_mess.channel.id in [779782709005910078]") or print_bool("is_not_player"):
+        print("")
         return
+
     counter += 1
+
     try:
         counter = int(message.content)
     except ValueError:
